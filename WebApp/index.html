@@ -34,13 +34,13 @@
     <div ng-include="'sidebarRight.html'" 
             class="sidebar sidebar-right"></div>
 
-    <div class="app" ng-swipe-right='Ui.turnOn("uiSidebarLeft")' ng-swipe-left='Ui.turnOn("uiSidebarRight")'>	<!-- vorher: ng-swipe-left='Ui.turnOff("uiSidebarLeft")' -->
+    <div class="app" ng-swipe-right='Ui.turnOn("uiSidebarLeft")' ng-swipe-left='Ui.turnOn("uiSidebarRight")'>	<!-- vorher (Swipe nur rechts): ng-swipe-left='Ui.turnOff("uiSidebarLeft")' -->
 
       <!-- Navbars -->
 
       <div class="navbar navbar-app navbar-absolute-top">
         <div class="navbar-brand navbar-brand-center" ui-yield-to="title">
-          WebRTC Home
+          WebRTC Home 123
         </div>
         <div class="btn-group pull-left">
           <div ui-toggle="uiSidebarLeft" class="btn sidebar-toggle">
