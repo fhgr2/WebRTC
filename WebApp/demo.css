@@ -1,3 +1,9 @@
+/* Color commitment:
+	Gray:		#TBA
+	LightGreen:	#68B836
+	DarkGreen:	#1C5836
+*/
+
 #lightbulb {
   font-size: 100px;
   display: block;
@@ -5,19 +11,19 @@
 }
 
 a {
-  color: #00B31D;
+  color: #68B836;
   text-decoration: none;
 }
 
 a:focus {
-  color: #007813;
+  color: #1C5836;
   text-decoration: underline;
 }
 
 h1 {
   padding: 0;
   margin: 10px 0;
-  color: #00B31D;
+  color: #68B836;
 }
 
 .chat-user-avatar {
@@ -37,16 +43,19 @@ h1 {
   border-radius: 200px;
   height: 72px;
   margin-bottom: 20px;
-  color: #00B31D;
+  color: #68B836;
+}
+.feature-icon:hover{
+  color: #1C5836;
 }
 
 .list-group-item.active {
-    background-color: #00B31D;
-    border-color: #00B31D;
+    background-color: #68B836;
+    border-color: #68B836;
 }
 .list-group-item.active:hover {
-    background-color: #00B31D;
-    border-color: #00B31D;
+    background-color: #1C5836;
+    border-color: #1C5836;
 }
 
 .feature-icon.fa-gamepad {
