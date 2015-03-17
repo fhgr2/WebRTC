@@ -7393,7 +7393,7 @@ a.list-group-item .icon.pull-right {
 
 .sidebar-header,
 .app-name {
-  position: relative;
+  position: relative;									
   width: 100%;
   line-height: 70px;
   padding: 0 10px;
@@ -7488,7 +7488,7 @@ a.list-group-item .icon.pull-right {
 
 .scrollable-header,
 .scrollable-footer {
-  position: absolute;
+  position: absolute;							
   width: 100%;
   left: 0;
   right: 0;

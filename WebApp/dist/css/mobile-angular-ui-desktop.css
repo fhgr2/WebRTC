@@ -468,7 +468,7 @@
     pointer-events: auto;
   }
   .sidebar-toggle {
-    display: none;
+    display: none;						/*menu button ein,ausblenden*/
   }
   .navbar-brand-center {
     text-align: left;
@@ -477,7 +477,7 @@
     position: relative;
   }
   .sidebar-left {
-    display: block;
+    display: block; 					/*sidebar links ein,ausblenden */
     left: 0;
     width: 300px;
   }
