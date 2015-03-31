@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!--<!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/html">
 <head>
     <title>WebRTC Simple Calling API + Mobile</title>
@@ -8,11 +8,11 @@
     <link href="css/styles.css" rel="stylesheet" type="text/css">
 </head>
 <body>
-
+-->
 <!-- =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
 <!-- My Phone Number & Dial Areas -->
 <!-- =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
-<div class="container">
+<div class="container" ng-init="loadrtc()">
     <div class="row">
 
         <!-- =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
@@ -85,16 +85,13 @@
         </div>
     </div>
 </div>
-
+<!--
 <!-- =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=- -->
 <!-- WebRTC Peer Connections -->
 <!-- =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=- -->
-<script src="https://code.jquery.com/jquery-1.11.2.min.js"></script>
-<script src="https://cdn.pubnub.com/pubnub.min.js"></script>
-<script src="js/webrtc.js"></script>
-<script src="js/sound.js"></script>
-<script>(function(){
 
+<script>(function(){
+console.log('something started');
 // -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
 // Generate Random Number if Needed
 // -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
@@ -154,6 +151,7 @@ var phone     = window.phone = PHONE({
     subscribe_key : 'sub-c-2b590512-966f-11e4-ae17-02ee2ddab7fe',
     ssl           : true
 });
+console.log('calling');
 
 // -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
 // Video Session Connected
@@ -342,5 +340,6 @@ phone.debug(function(details){
 });
 
 })();</script>
+
 </body>
-</html>
+</html>-->
