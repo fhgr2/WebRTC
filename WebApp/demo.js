@@ -22,8 +22,8 @@ var app = angular.module('WebAppProj', [
 // 
 app.config(function($routeProvider) {
   $routeProvider.when('/',              {templateUrl: 'home.html', reloadOnSearch: false});
-  $routeProvider.when('/call',          {templateUrl: 'studrtc/index.html', reloadOnSearch: false});
-  $routeProvider.when('/toggle',        {templateUrl: 'toggle.html', reloadOnSearch: false}); 
+  $routeProvider.when('/call',          {templateUrl: 'studrtc/call.html', reloadOnSearch: false});
+  $routeProvider.when('/oldcall',       {templateUrl: 'studrtc/index.html', reloadOnSearch: false}); 
   $routeProvider.when('/tabs',          {templateUrl: 'tabs.html', reloadOnSearch: false}); 
   $routeProvider.when('/accordion',     {templateUrl: 'accordion.html', reloadOnSearch: false}); 
   $routeProvider.when('/overlay',       {templateUrl: 'overlay.html', reloadOnSearch: false}); 
@@ -187,6 +187,10 @@ app.directive('carouselItem', function($drag) {
 // for everything
 //
 app.controller('MainController', function($rootScope, $scope){
+  // *************************************
+  // USE THIS TO DISPLAY CONTACTS-SIDEBAR ON LOGIN!
+  // *************************************
+  $scope.loggedIn = false;
 
   // User agent displayed in home page
   $scope.userAgent = navigator.userAgent;
@@ -202,6 +206,7 @@ app.controller('MainController', function($rootScope, $scope){
 
   // Fake text i used here and there.
   $scope.lorem = 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Vel explicabo, aliquid eaque soluta nihil eligendi adipisci error, illum corrupti nam fuga omnis quod quaerat mollitia expedita impedit dolores ipsam. Obcaecati.';
+
 
   // 
   // 'Scroll' screen
@@ -515,6 +520,7 @@ phone.unable(function(details){
     console.log("Alert! - Reload Page.");
     console.log(details);
     set_icon('remove');
+    alert(':( Something went wrong! Does your system have a webcam and audiodevice connected?');
 });
 
 // -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
