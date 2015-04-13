@@ -337,8 +337,8 @@ var img_self  = PUBNUB.$('video-self');
 
 var phone     = window.phone = PHONE({
     number        : my_number.number, // listen on this line
-    publish_key   : 'pub-c-8d6002b3-81e9-43de-bd60-3ed529dba947',
-    subscribe_key : 'sub-c-2b590512-966f-11e4-ae17-02ee2ddab7fe',
+    publish_key   : 'pub-c-7a825a6c-cb59-49d5-99d2-68e274f322dc',
+    subscribe_key : 'sub-c-f0922dba-e1e0-11e4-9766-0619f8945a4f',
     ssl           : true
 });
 console.log('7 started');
