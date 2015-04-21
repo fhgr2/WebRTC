@@ -20,6 +20,14 @@
 .pubnub-relative {
     position: relative;
 }
+/* =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= */
+/* Title */
+/* =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= */
+#title {									/*call now on call.html*/
+/* 	text-align: center; */
+	font-size: 300%;
+	background-color: #FFFFFF;
+	color: #68B836; }
 
 /* =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= */
 /* PubNub Chat */
@@ -28,7 +36,7 @@
     margin: 0px;
 }
 #pubnub-chat-input {
-    width: 100%;
+	width: 30%;
     margin: 0px 0px 20px 0px;
     outline: 0;
     border: 0px;
@@ -39,7 +47,8 @@
 }
 /* chat box output */
 #pubnub-chat-output {
-    text-align: left;
+	width: 50%;
+	text-align: left;
     overflow: scroll;
     overflow-x: hidden;
     margin: 20px 0px 20px 0px;
@@ -48,6 +57,7 @@
     font-weight: 200;
     font-family: "Helvetica Neue";
     outline: 0;
+	border-radius: 25px;
     border-color: inherit;
     -webkit-box-shadow: none;
     box-shadow: none;
@@ -66,12 +76,12 @@
 }
 #my-number-title {
     font-size: 20px;
-    line-height: 20px;
+    line-height: 50px;
     font-weight: 400;
 }
 #my-number {
-    font-size: 110px;
-    line-height: 180px;
+    font-size: 35px;
+    line-height: 20px;
     font-weight: 100;
 }
 #my-number-permalink {
@@ -87,7 +97,7 @@
     font-size: 16px;
     line-height: 20px;
     font-weight: 400;
-    color: #fff;
+    color: #040404;
 }
 #my-number-permalink a {
     color: #428bca;
@@ -103,27 +113,70 @@
     overflow: hidden;
 }
 #video-display {
-    height: 340px;
+	
+	border: 1px solid #f8f8f8;
+	border-color: inherit;
+	border-radius: 25px;
+	height: 360px;
+	width: 480px;
     text-align: center;
     color: #eee;
     font-size: 150px;
     line-height: 340px;
+
 }
+
 #video-self {
-    position: absolute;
-    height: 340px;
+	border: 1px solid #f8f8f8;
+	border-color: inherit;
+	border-radius: 25px;
+	height: 152px;
+	width: 203px;
+    text-align: center;
+    color: #eee;
+    font-size: 150px;
+    line-height: 340px;
+	}
+
+/*#video-self {
+	border: 1px solid black;
+    position: relative;
+    height: 100px;
     width: 100%;
     top: 0px;
     left: 0px;
     text-align: center;
     font-size: 0px;
     line-height: 0px;
+}*/
+#video-display video
+{
+	border: 1px solid #f8f8f8;
+	border-color: inherit;
+	border-radius: 25px;
+	height: 360px;
+	width: 480px;
+    text-align: center;
+    color: #eee;
+    font-size: 150px;
+    line-height: 340px;
 }
-#video-display video,
-#video-self  img {
+#video-self video
+{
+	border: 1px solid #f8f8f8;
+	border-color: inherit;
+	border-radius: 25px;
+	height: 152px;
+	width: 203px;
+    text-align: center;
+    color: #eee;
+    font-size: 150px;
+    line-height: 340px;
+}
+/*#video-self  img {
     border-radius: 6px;
     height: 300px;
-} 
+} */
 #video-thumbnail {
     position: absolute;
     top: -180px;
@@ -136,7 +189,11 @@
 }
 
 .dial-buttons .btn {
-    width: 30%;
+    width: 50%;
+}
+
+#form-group {
+	width: 200px;
 }
 
 /* =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= */
@@ -157,7 +214,7 @@
         font-weight: normal;
     }
     #my-number::before {
-        content: "Your number is: ";
+        /* content: "Your number is: "; 			brauchts nicht mehr text ist anders drinn!*/
         font-weight: 100;
         color: #878787;
     }
@@ -176,11 +233,14 @@
         border-bottom: none;
     }
     #video-display {
-        height: 240px;
+		width: 240px;
+        height: 180px;
         line-height: 240px;
     }
     #video-self {
-        height: 240px;
+        width: 120px;
+		height: 90px;
+		margin-top: 20px;
     }
     #pubnub-logo {
         top: -50px;
