@@ -34,9 +34,9 @@ app.config(function($routeProvider) {
 });
 
 //
-// `$drag` example: drag to dismiss
+// `$drag` example: drag to dismiss   brauchen wir nicht
 //
-app.directive('dragToDismiss', function($drag, $parse, $timeout){
+/* app.directive('dragToDismiss', function($drag, $parse, $timeout){
   return {
     restrict: 'A',
     compile: function(elem, attrs) {
@@ -179,7 +179,7 @@ app.directive('carouselItem', function($drag) {
       });
     }
   };
-});
+}); */
 
 
 //
@@ -254,7 +254,7 @@ app.controller('MainController', function($rootScope, $scope){
     { name: 'Ebony Rice', online: false }
   ];
 
-  //
+/*   //
   // 'Forms' screen
   //  
   $scope.rememberMe = true;
@@ -278,7 +278,7 @@ app.controller('MainController', function($rootScope, $scope){
     if (index > -1) {
       $scope.notices.splice(index, 1);
     }
-  };
+  }; */
 // gaaaah
 $scope.loadrtc = function(){
 console.log('1 started');
@@ -305,7 +305,7 @@ console.log('3 started');
 }*/
 console.log('4 started');
 // -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
-// Get URL Params
+// Get URL Params    funktioniert noch nicht
 // -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
 function urlparams() {
     var params = {};
@@ -351,7 +351,7 @@ function connected(session) {
     video_out.appendChild(session.video);
 
     PUBNUB.$('number').value = ''+session.number;
-    sounds.play('sound/hi');
+    //sounds.play('sound/hi');												auskommentiert weil Fehlermeldungen das sound nicht geladen werden konnte!
     console.log("Hi!");
 }
 
@@ -361,7 +361,7 @@ function connected(session) {
 function ended(session) {
     set_icon('facetime-video');
     img_out.innerHTML = '';
-    sounds.play('sound/goodbye');
+    //sounds.play('sound/goodbye');
     console.log("Bye!");
 }
 
@@ -409,7 +409,7 @@ function dial(number) {
 
     // Show Connecting Status
     set_icon('send');
-}
+} 
 
 // -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
 // Ready to Send or Receive Calls
@@ -470,25 +470,33 @@ phone.receive(function(session){
 // Chat
 // -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
 var chat_in  = PUBNUB.$('pubnub-chat-input');
+console.log("chat input");
 var chat_out = PUBNUB.$('pubnub-chat-output');
+console.log("chat output");
 
 // -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
 // Send Chat MSG and update UI for Sending Messages
 // -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
 PUBNUB.bind( 'keydown', chat_in, function(e) {
     if ((e.keyCode || e.charCode) !== 13)     return true;
+	console.log("chat 1");
     if (!chat_in.value.replace( /\s+/g, '' )) return true;
-
+	console.log("chat 2");
+	
     phone.send({ text : chat_in.value });
+	console.log("chat 3");
     add_chat( my_number.number + " (Me)", chat_in.value );
+	console.log("chat 4");
     chat_in.value = '';
-} )
+	console.log("chat 5");
+} ); console.log("chat send");
 
 // -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
 // Update Local GUI
 // -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
 function add_chat( number, text ) {
     if (!text.replace( /\s+/g, '' )) return true;
+	
 
     var newchat       = document.createElement('div');
     newchat.innerHTML = PUBNUB.supplant(
@@ -497,7 +505,8 @@ function add_chat( number, text ) {
         number  : safetxt(number)
     } );
     chat_out.insertBefore( newchat, chat_out.firstChild );
-}
+	console.log("chat update");
+} 
 
 // -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
 // WebRTC Message Callback
@@ -527,7 +536,7 @@ phone.unable(function(details){
 // Debug Output
 // -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
 phone.debug(function(details){
-     // console.log(details);
+     console.log(details);
 });
 
 };
