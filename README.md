@@ -1,6 +1,6 @@
 # StudRTC
 
-[Demoversion unter goo.gl/sycmTi](stud.htwchur.ch/studermartin_stu205/WebAppProj/)
+[Demoversion unter goo.gl/sycmTi](http://stud.htwchur.ch/studermartin_stu205/WebAppProj/)
 
 ## Beschreibung
 Eine Mobiletaugliche Webapplikation zur Browserbasierten und Browserübergreiffenden Kommunikation zwischen zwei Benutzern per Video, Audio und Chat. Basierend auf WebRTC und dem PubNub Data-Streaming-Network.
