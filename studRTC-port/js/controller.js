@@ -242,8 +242,39 @@ app.controller('RTCController', function($rootScope, $scope){
             };
 			var handleSendFile = function(){
 				console.log("sending: "+globalType+" with "+globalData);
-				phone.send({type : globalType, file : globalData });
-			}
+                console.log(globalData.length);
+                var progressBar = document.getElementById("sendProgress");
+                console.log(progressBar.getAttribute("aria-valuenow"));
+                progressBar.setAttribute("aria-valuenow", "0");
+                if (globalData.length > 5000) {
+                    console.log("sending something big");
+                    while (globalData.length > 5000) {
+                        //slice globalData
+                        console.log('send...');
+                        var sendData = globalData.substr(0, 5000);
+                        //globalData = globalData.slice(0, 5000);
+                        globalData = globalData.slice(5000);
+                        console.log("still to send: "+globalData.length);
+                        phone.send({type: globalType, file: sendData});
+                    }
+                    phone.send({type: globalType, file: globalData});
+                    phone.send({type: "end"});
+                    globalData = "";
+                    console.log(globalData.length);
+                    console.log("sent end");
+                    progressBar.setAttribute("aria-valuenow", "100");
+                } else {
+                    console.log("sending something small");
+                    phone.send({type: globalType, file: globalData});
+                    phone.send({type: "end"});
+                    globalData = "";
+                    console.log(globalData.length);
+                    console.log("sent end");
+                    progressBar.setAttribute("aria-valuenow", "100");
+                }
+
+
+			};
 
             if (window.File && window.FileReader && window.FileList && window.Blob) {
 				document.getElementById('sendBtn').addEventListener('click', handleSendFile, false);
@@ -313,17 +344,26 @@ app.controller('RTCController', function($rootScope, $scope){
 // -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
 // WebRTC Message Callback
 // -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+        var fileString ="";
         function message( session, message ) {
             if(message.text){
                 add_chat( session.number, message.text );
-            } else if (message.file){
-                console.log(message.file);
-                //var blob = b64toBlob(message.file, contentType);
-                var blob = b64toBlob(message.file,  message.type);
-                var blobUrl = URL.createObjectURL(blob);
+            } else if (message.file || (message.type = "end")){
+                console.log("got a message");
+                console.log("file: "+message.file);
+                console.log("type: "+message.type);
+                if(message.type != "end"){
+                    fileString += message.file+"";
+                    console.log("added: "+message.file);
+                } else {
+                    //var blob = b64toBlob(message.file, contentType);
+                    var blob = b64toBlob(fileString,  message.type);
+                    var blobUrl = URL.createObjectURL(blob);
+                    fileString = "";
+                    //window.location = blobUrl;
+                    window.open(blobUrl);
+                }
 
-                //window.location = blobUrl;
-                window.open(blobUrl);
             }
         }
 
@@ -347,9 +387,12 @@ app.controller('RTCController', function($rootScope, $scope){
 // Debug Output
 // -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
         phone.debug(function(details){
-            // console.log(details);
+            //console.log(details);
         });
 
+// -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+// Base64 decoder
+// -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
         function b64toBlob(b64Data, contentType, sliceSize) {
             contentType = contentType || '';
             sliceSize = sliceSize || 512;

@@ -37,8 +37,13 @@
 				<!--<input type="file" id="files1" name="files1[]" multiple />
 				<output id="file_list"></output>	-->
               <div >
-                  <label for="filePicker">Send file</label><br>
-                  <input type="file" id="filePicker"><button class="btn btn-primary" id="sendBtn"><i class="fa fa-paper-plane"></i>Send file</button>
+                  <input type="file" id="filePicker">
+                  <button class="btn btn-primary" id="sendBtn"><i class="fa fa-paper-plane"></i>Send file</button><br>
+              </div>
+              <div class="progress">
+                  <div id="sendProgress" class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100" style="width: 45%">
+                      <span class="sr-only">45% Complete</span>
+                  </div>
               </div>
 		  </div>
 		</div>
