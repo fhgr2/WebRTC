@@ -1,0 +1,98 @@
+<!-- =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<!-- My Phone Number & Dial Areas -->
+<!-- =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<!--<div class="scrollable-content" ng-controller="RTCController as rtc">-->
+<div >
+  <div class="list-group-item list-group-item-home" style="height: 92vh " >
+    <div class="row"  ng-init="start()"><!--das ersetze damits nüm so rechts isch mitme grusige balke-->
+
+        <!-- =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+        <!-- MY PHONE NUMBER -->
+        <!-- =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+        <div class="col-md-6 col-sm-6 col-xs-12">
+            <div id="my-number-section" class="text-center" ng-hide="hide.connect">
+                <div id="my-number-title" class="hidden-sm hidden-xs">
+                    Your phone number is:
+                </div>
+				<strong><div id="my-number">LOADING</div></strong>
+				Or you can connect via this Link with your friend:
+                <div id="my-number-permalink">
+                    <span class="glyphicon glyphicon-link"></span>
+                    call link:
+                    <a id="my-number-link" href="...">http://...</a>
+                </div>
+            </div>
+			<p></p>
+		</div>
+		
+		<!-- =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+		<!--chat-->
+		<!-- =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+	  <!-- <div class="col-md-12 col-sm-12 col-xs-12">  -->
+		
+		<div id="file" class="col-md-6 col-sm-6 col-xs-12" > 
+		  <div id="browse" class="text-center" ng-hide="hide.transfer">
+              <h2>File transfer</h2>
+              <p></p>
+				<!--<input type="file" id="files1" name="files1[]" multiple />
+				<output id="file_list"></output>	-->
+              <div >
+                  <label for="filePicker">Send file</label><br>
+                  <input type="file" id="filePicker"><button class="btn btn-primary" id="sendBtn"><i class="fa fa-paper-plane"></i>Send file</button>
+              </div>
+		  </div>
+		</div>
+		<div id="chat" class="col-md-6 col-sm-6 col-xs-12">
+            <div id="pubnub-chat-section" class="text-center" ng-hide="hide.transfer">
+				<h2>Chat</h2>
+				<p>On this site you can chat and exchange files with your friends.</p>
+                <input id="pubnub-chat-input" type="text" placeholder="chat here">
+                <div id="pubnub-chat-output"><div></div></div>
+            </div>
+        </div>
+	   <!-- </div>  -->
+		
+		
+        <!-- =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+        <!-- Video -->
+        <!-- =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->	
+            <!-- DISPLAY was here-->
+            <div class="row" ng-hide="hide.call" style="vertical-align: top">
+                    <div id="video-border" class="col-md-12 col-sm-12 col-xs-12">                       
+						<div id="video-display" class="col-md-8 col-sm-8 col-xs-12">
+                            <span class="fa fa-flash"></span>
+                        </div>						
+                        <div id="video-self" class="col-md-4 col-sm-4 col-xs-12">...834y8uask</div>                                            
+                    </div>     
+					<!--NICHT RAUSLÖSCHEN!!! Brauchts weil sonst Fehlermeldung die Funktion abbricht -> kein Chat mehr!-->
+					<div id="pubnub-relative" ng-hide="true">
+                        <div id="video-thumbnail"></div>
+                        <div id="pubnub-logo">
+                            <div id="pubnub-logo-img"></div>
+                        </div>
+                    </div>
+            </div>
+			
+           <!-- DIAL CONTROLS -->
+            <div class="row" ng-hide="hide.connect">
+                <div class="col-sm-6 col-xs-7">
+                    <div class="form-group"><div class="input-group">
+                        <div class="input-group-addon">
+                            <span class="fa fa-user"></span>
+                        </div>
+                        <input id="number" class="form-control" type="number" placeholder="Type Recipient's #">
+                    </div></div>
+                </div>
+                <div class="col-sm-6 col-xs-5 dial-buttons">
+                    <button id="dial" class="btn btn-primary" ng-click="dial()">
+                        <i class="fa fa-users"></i>
+                    </button>
+                    <!--<button id="hangup" class="btn btn-danger" ng-click="hangup()">
+                        <i class="fa fa-user"></i>
+                    </button>-->
+                </div>
+            </div>
+        
+    </div>
+  </div>
+</div>

@@ -1,0 +1,18 @@
+<div class="scrollable" ng-swipe-left='Ui.turnOff("uiSidebarLeft")' >
+    <h1 class="scrollable-header app-name">Menu <small>StudRTC</small></h1>
+    <div class="scrollable-content">
+        <div class="list-group" ui-turn-off='uiSidebarLeft'>
+            <div ng-if="connectedId">
+                <!--
+                <a class="list-group-item" href="#/call"><i class="fa fa-video-camera"></i> Video/Audio Call <i class="fa fa-chevron-right pull-right"></i></a>
+                <a class="list-group-item" href="#/transfer"><i class="fa fa-file"></i> Chat and Filetransfer <i class="fa fa-chevron-right pull-right"></i></a>
+                <a ng-click="hangup()" class="list-group-item list-group-item-danger" href="#/connect"><i class="fa fa-trash"></i> End Call <i class="fa fa-chevron-right pull-right"></i></a>
+                -->
+                <a ng-click="showCall()" class="list-group-item"><i class="fa fa-video-camera"></i> Video/Audio Call <i class="fa fa-chevron-right pull-right"></i></a>
+                <a ng-click="showTransfer()" class="list-group-item"><i class="fa fa-file"></i> Chat and Filetransfer <i class="fa fa-chevron-right pull-right"></i></a>
+                <a ng-click="hangup()" class="list-group-item list-group-item-danger"><i class="fa fa-trash"></i> End Call <i class="fa fa-chevron-right pull-right"></i></a>
+
+            </div>
+        </div>
+    </div>
+</div>

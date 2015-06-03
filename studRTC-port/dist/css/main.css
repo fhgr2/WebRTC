@@ -1,0 +1,36 @@
+
+	#chat {
+		position: relative;
+	}
+	
+	#file{
+		position: fixed;
+	}
+	
+	h2 {
+		position: left;
+		font-family: Bitstream Vera Sans;
+		color: #156711;
+	}
+	
+	@media (max-width: 768px) {
+		#file{
+			position:relative;
+		}
+		
+		#chat{
+			position:relative;
+		}
+		
+		#video-display video {
+			width: 90%;
+			height: 30%;
+		}
+	
+		#video-self video {
+			width: 60%;
+			height: 20%;
+		
+		}
+	
+	}
