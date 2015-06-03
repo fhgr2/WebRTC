@@ -1,0 +1,148 @@
+<div class="scrollable" ng-init="loadrtc()">  
+    <div class="scrollable-content">
+	
+        <!-- PHONE NR HEADER -->
+        <div class="list-group-item list-group-item-home">
+            <div class="row">
+			<div class="col-md-4">
+			<a class="btn btn-danger" href="" ui-turn-on="modal1">
+                <span class="fa fa-info"></span> 
+				
+            </a>
+			</div>
+			<div class="col-md-4 text-center">
+			<div id="title"> Call now!</div>
+			</div>
+			</div>
+			
+			<p></p>
+            <div id="my-number-section"> <!--class="text-center" linksbündig--> 
+                
+                <div id="my-number-title" class="hidden-sm hidden-xs">
+                    this is your phone number:<strong><div id="my-number">LOADING</div></strong>
+				</div>
+
+                <div id="my-number-permalink">
+                    <span class="fa fa-link"></span>
+                    call link:
+                    <a id="my-number-link" href="...">http://...</a>
+                </div>
+            </div>
+			
+            
+        </div>
+        <!-- PHONE NR HEADER END -->
+
+        <!-- CONTENT AREA -->
+        <div class="list-group text-center">
+            <div class="list-group-item list-group-item-home"  >
+                <!-- VIDEO AREA -->
+                <div class="row">
+				
+                
+				
+				
+				<div class="col-md-8 ">
+                        <div id="video-display">
+                            <span class="fa fa-bolt"></span>
+                        </div>
+				</div>
+				
+				<div class="col-md-4 "> <!--col-md-push 2 text-center-->
+                    <!--<div id="video-border">
+                        <div class="pubnub-relative">-->
+                            <div id="video-self"></div>
+							
+							<div class="row">
+							<div class="col-sm-6 col-xs-7">
+                    <div id="form-group" class="form-group"><div class="input-group">
+                    <div class="input-group-addon">
+                        <span class="fa fa-th"></span>
+                    </div>
+                    <input id="number" class="form-control" type="number" placeholder="Type Recipient's #">
+                    </div></div>
+					
+					 <!--<div class="col-sm-6 col-xs-5 dial-buttons"><-->
+                    <button id="dial" class="btn btn-primary">
+                        <span class="fa fa-phone" <!-- href="" ui-turn-on="modal2_test" --></span>
+                    </button>
+                    <button id="snap" class="btn btn-success">
+                        <span class="fa fa-camera"></span>
+                    </button>
+                    <button id="hangup" class="btn btn-danger">
+                        <span class="fa fa-ban"></span>
+                    </button>                    
+                 <!--</div>-->
+					
+                </div>
+                						
+							</div>
+                        <!--</div>
+					</div>-->
+				</div>
+				
+				
+				
+				
+                    <!-- <div id="pubnub-relative">
+                        <div id="video-thumbnail"></div>            Auskommentieren fuer zwei kleine Bilder und Logo nicht mehr anzeigen          
+                        <div id="pubnub-logo">
+                            <div id="pubnub-logo-img"></div>
+                        </div>
+                    </div> -->
+                
+            
+                <!-- VIDEO AREA END -->
+                <!-- CONTROLS -->
+                    <!-- <div class="row">
+                <div class="col-sm-6 col-xs-7">						Alles bereits weiter oben drinn!
+                    <div class="form-group"><div class="input-group">
+                    <div class="input-group-addon">
+                        <span class="fa fa-th"></span>
+                    </div>
+                    <input id="number" class="form-control" type="number" placeholder="Type Recipient's #">
+                    </div></div>
+                </div>
+                <div class="col-sm-6 col-xs-5 dial-buttons">
+                    <button id="dial" class="btn btn-primary">
+                        <span class="fa fa-phone"></span>
+                    </button>
+                    <button id="snap" class="btn btn-success">
+                        <span class="fa fa-camera"></span>
+                    </button>
+                    <button id="hangup" class="btn btn-danger">
+                        <span class="fa fa-ban"></span>
+                    </button>                    
+                </div>
+					</div> -->
+                <!-- CONTROLS END -->
+				
+				</div>
+			</div>
+			
+					<!-- CONTENT AREA END -->
+
+						<!-- CHAT AREA maybe make togglable in the future?  text-center -->
+						<div class="list-group ">
+					<div class="list-group-item list-group-item-home"  id="pubnub-chat-section" class="text-center"> <!---->
+						<input id="pubnub-chat-input" type="text" placeholder="chat here">
+							<div id="pubnub-chat-output"><div></div></div>
+					</div>
+					</div>
+				
+			
+        </div>
+		
+        <!-- CHAT AREA END -->
+
+	</div>
+</div>
+
+
+
+<div ui-content-for="modals">
+  <div ng-include="'modal1.html'"></div>
+</div>
+<!-- <div ui-content-for="modals">
+  <div ng-include="'modal2_test.html'"></div>
+</div> -->
