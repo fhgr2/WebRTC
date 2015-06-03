@@ -251,7 +251,7 @@ app.controller('RTCController', function($rootScope, $scope){
                         phone.send({type: globalType, file: sendData}, null, function(){
                             progress += increment;
                             progressBar.style.width = progress+"%";
-                            if (progress > 99) {
+                            if ((progress + increment) >= 100) {
                                 progressBar.setAttribute("class", "progress-bar progress-bar-striped");
                                 progressBar.style.width = "100%";
                             }
