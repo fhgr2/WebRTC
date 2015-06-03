@@ -3,7 +3,7 @@
 [Demoversion unter goo.gl/sycmTi](http://stud.htwchur.ch/studermartin_stu205/WebAppProj/)
 
 ## Beschreibung
-Eine Mobiletaugliche Webapplikation zur Browserbasierten und Browserübergreiffenden Kommunikation zwischen zwei Benutzern per Video, Audio und Chat. Basierend auf WebRTC und dem PubNub Data-Streaming-Network.
+Eine Mobiletaugliche Webapplikation zur Browserbasierten und Browserübergreiffenden Kommunikation zwischen zwei Benutzern per Video, Audio und Chat und zum Austuasch von Files jeglicher Art. Basierend auf WebRTC und dem PubNub Data-Streaming-Network.
 Das GUI Basiert auf dem Mobile-Angular-UI Framework.
 
 Unterstützt werden Folgende Desktop- sowie Mobile-Browser:
