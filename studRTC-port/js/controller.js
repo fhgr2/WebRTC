@@ -1,49 +1,47 @@
-//TODO chaos besiitige mit ng-hide.. momentan isch d sidebar immer visible wär connected=true als default..
-// wiso wird d funktion nöd ufgruefe bimne connect/disconnect wommer ni selber macht?
-// ez mummer immr vo hand zwüschet de asichte wächsle..
-
 var app = angular.module('StudRTC', ['ngRoute', 'mobile-angular-ui', 'mobile-angular-ui.gestures']);
 
+// -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+// Angular routing
+// -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
 app.config(function($routeProvider){
     $routeProvider.when('/',	    {templateUrl: 'home.html'});
     $routeProvider.when('/connect',	    {templateUrl: 'connect.html'});
 	
 });
 
-
+// -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+// Controller global functions and variables - used to show and hide features
+// -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
 app.controller('RTCController', function($rootScope, $scope){
-
-
     console.log('rtc controller');
     $scope.hide = {connect : false, call : true, transfer : true};
-    $scope.connectedId = false;//haaaa a gagaggagagag
+    $scope.connectedId = false;
     $scope.showConnect = function() {
-        console.log('showConnect');
         $scope.hide.connect = false;
         $scope.hide.call = true;
         $scope.hide.transfer = true;
         $scope.$apply()
     };
     $scope.showCall = function() {
-        console.log('showCall');
         $scope.hide.connect = true;
         $scope.hide.call = false;
         $scope.hide.transfer = true;
         $scope.$apply()
     };
     $scope.showTransfer =function() {
-        console.log('showTransfer');
         $scope.hide.connect = true;
         $scope.hide.call = true;
         $scope.hide.transfer = false;
         $scope.$apply()
     };
 
-
+    // -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+    // Functionality - gets called on page load
+    // -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
     $scope.start = function(){
-// -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
-// Generate Random Number if Needed
-// -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+        // -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+        // Generate Random Number if Needed
+        // -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
         var urlargs         = urlparams();
         var my_number       = PUBNUB.$('my-number');
         var my_link         = PUBNUB.$('my-number-link');
@@ -54,18 +52,18 @@ app.controller('RTCController', function($rootScope, $scope){
         my_link.href        = location.href.split('?')[0] + '?call=' + number;
         my_link.innerHTML   = my_link.href;
 
-// -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
-// Update Location if Not Set
-// -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+        // -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+        // Update Location if Not Set
+        // -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
         if (!('number' in urlargs)) {
             urlargs.number = my_number.number;
             location.href = urlstring(urlargs);
             return
         }
 
-// -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
-// Get URL Params
-// -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+        // -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+        // Get URL Params
+        // -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
         function urlparams() {
             var params = {};
             if (location.href.indexOf('?') < 0) return params;
@@ -78,18 +76,18 @@ app.controller('RTCController', function($rootScope, $scope){
             return params;
         }
 
-// -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
-// Construct URL Param String
-// -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+        // -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+        // Construct URL Param String
+        // -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
         function urlstring(params) {
             return location.href.split('?')[0] + '?' + PUBNUB.map(
                     params, function( key, val) { return key + '=' + val }
                 ).join('&');
         }
 
-// -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
-// Calling & Answering Service
-// -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+        // -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+        // Calling & Answering Service
+        // -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
         var video_out = PUBNUB.$('video-display');
         var img_out   = PUBNUB.$('video-thumbnail');
         var video_self  = PUBNUB.$('video-self');
@@ -102,45 +100,42 @@ app.controller('RTCController', function($rootScope, $scope){
             ssl           : true
         });
 
-// -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
-// Video Session Connected
-// -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
-        function connected(session) {
+        // -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+        // Video Session Connected
+        // -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+            function connected(session) {
             $scope.connectedId = true;
             $scope.$apply();
             $scope.showCall();
 
-            //$scope.showCall();
             video_out.innerHTML = '';
             video_out.appendChild(session.video);
 
             PUBNUB.$('number').value = ''+session.number;
-            console.log("Hi!");
         }
 
-// -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
-// Video Session Ended
-// -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
-        function ended(session) {
+        // -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+        // Video Session Ended
+        // -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+            function ended(session) {
             $scope.connectedId = false;
             $scope.$apply();
             $scope.showConnect();
             set_icon('bolt');
             img_out.innerHTML = '';
-            console.log("Bye!");
         }
 
-// -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
-// Video Session Ended
-// -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+        // -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+        // Video Session Ended
+        // -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
         function set_icon(icon) {
             video_out.innerHTML = '<span class="fa fa-' +
             icon + '"></span>';
         }
 
-// -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
-// Request fresh TURN servers from XirSys
-// -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+        // -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+        // Request fresh TURN servers from XirSys
+        // -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
         function get_xirsys_servers() {
             var servers;
             $.ajax({
@@ -162,9 +157,9 @@ app.controller('RTCController', function($rootScope, $scope){
             return servers;
         }
 
-// -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
-// Start Phone Call
-// -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+        // -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+        // Start Phone Call
+        // -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
         function dial(number) {
             $scope.showCall();
             $scope.connectedId = true;
@@ -177,20 +172,19 @@ app.controller('RTCController', function($rootScope, $scope){
             // Show Connecting Status
             set_icon('spinner fa-5x fa-spin');
 
-
         }
 
-// -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
-// Ready to Send or Receive Calls
-// -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+        // -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+        // Ready to Send or Receive Calls
+        // -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
         phone.ready(function(){
             // Ready To Call
             set_icon('video-camera');
-            //display video self
+            // display video self
             video_self.innerHTML = '';
             video_self.appendChild(phone.video);
 
-            // Auto Call
+            // Auto Call via URL
             if ('call' in urlargs) {
                 var number = urlargs['call'];
                 PUBNUB.$('number').value = number;
@@ -198,7 +192,7 @@ app.controller('RTCController', function($rootScope, $scope){
                 $scope.connectedId = true;
             }
 
-            // Make a Phone Call
+            // Call by button push
             $scope.dial = function() {
                 $scope.connectedId = true;
                 console.log('dial');
@@ -207,21 +201,24 @@ app.controller('RTCController', function($rootScope, $scope){
                 dial(number);
             };
 
+            // hangup by button push
             $scope.hangup = function() {
                 $scope.connectedId = false;
                 console.log('hangup');
                 phone.hangup();
                 set_icon('video-camera');
             };
+            // variables for file storage
 			var globalType;
 			var globalData;
             var progressBar = document.getElementById("sendProgress");
-            // Prepare file for transfer
+            // -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+            // encode files for transfer
+            // -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
             var handleFileSelect = function (evt) {
                 var files = evt.target.files;
                 var file = files[0];
                 var type = file.type;
-                console.log(file.type);
                 progressBar.style.width = "0%";
                 if (files && file) {
                     var reader = new FileReader();
@@ -234,7 +231,9 @@ app.controller('RTCController', function($rootScope, $scope){
                     reader.readAsBinaryString(file);
                 }
             };
-            // transfer file
+            // -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+            // transfer files
+            // -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
 			var handleSendFile = function(){
 				console.log("sending: "+globalType+" with "+globalData.length+" characters");
                 var chunkSize = 10000;
@@ -276,22 +275,21 @@ app.controller('RTCController', function($rootScope, $scope){
             } else {
                 alert('The File APIs are not fully supported in this browser.');
             }
-
         });
 
-// -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
-// Received Call Thumbnail
-// -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+        // -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+        // Received Call Thumbnail
+        // -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
         function thumbnail(session) {
             img_out.innerHTML = '';
             img_out.appendChild(session.image);
             img_out.appendChild(phone.snap().image);
         }
 
-// -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
-// Receiver for Calls
-// -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
-        phone.receive(function(session){
+        // -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+        // Receiver for Calls
+        // -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+            phone.receive(function(session){
             set_icon('spinner fa-5x fa-spin');
             $scope.connectedId = true;
             $scope.$apply();
@@ -302,15 +300,15 @@ app.controller('RTCController', function($rootScope, $scope){
             session.ended(ended);
         });
 
-// -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
-// Chat
-// -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+        // -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+        // Chat
+        // -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
         var chat_in  = PUBNUB.$('pubnub-chat-input');
         var chat_out = PUBNUB.$('pubnub-chat-output');
 
-// -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
-// Send Chat MSG and update UI for Sending Messages
-// -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+        // -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+        // Send Chat MSG and update UI for Sending Messages
+        // -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
         PUBNUB.bind( 'keydown', chat_in, function(e) {
             if ((e.keyCode || e.charCode) !== 13)     return true;
             if (!chat_in.value.replace( /\s+/g, '' )) return true;
@@ -320,9 +318,9 @@ app.controller('RTCController', function($rootScope, $scope){
             chat_in.value = '';
         } );
 
-// -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
-// Update Local GUI
-// -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+        // -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+        // Update Local GUI for chat
+        // -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
         function add_chat( number, text ) {
             if (!text.replace( /\s+/g, '' )) return true;
 
@@ -335,58 +333,55 @@ app.controller('RTCController', function($rootScope, $scope){
             chat_out.insertBefore( newchat, chat_out.firstChild );
         }
 
-// -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
-// WebRTC Message Callback
-// -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+        // -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+        // WebRTC Message Callback - for receiving messages
+        // -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
         var fileString ="";
         function message( session, message ) {
             if(message.text){
+                // received a chat message
                 add_chat( session.number, message.text );
             } else if (message.file || (message.type = "end")){
-                console.log("got a message");
-                console.log("file: "+message.file);
-                console.log("type: "+message.type);
+                // received a file
                 if(message.type != "end"){
                     fileString += message.file+"";
-                    console.log("added: "+message.file);
                 } else {
-                    //var blob = b64toBlob(message.file, contentType);
                     var blob = b64toBlob(fileString,  message.type);
                     var blobUrl = URL.createObjectURL(blob);
                     fileString = "";
-                    //window.location = blobUrl;
+                    // open received file in new window
                     window.open(blobUrl);
                 }
 
             }
         }
 
-// -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
-// XSS Prevent
-// -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+        // -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+        // XSS Prevent
+        // -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
         function safetxt(text) {
             return (''+text).replace( /[<>]/g, '' );
         }
 
-// -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
-// Problem Occured During Init
-// -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+        // -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+        // Problem Occured During Init
+        // -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
         phone.unable(function(details){
             console.log("Alert! - Reload Page.");
             console.log(details);
             set_icon('times');
         });
 
-// -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
-// Debug Output
-// -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+        // -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+        // Debug Output
+        // -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
         phone.debug(function(details){
             //console.log(details);
         });
 
-// -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
-// Base64 decoder
-// -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+        // -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+        // Base64 decoder
+        // -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
         function b64toBlob(b64Data, contentType, sliceSize) {
             contentType = contentType || '';
             sliceSize = sliceSize || 512;
@@ -401,17 +396,11 @@ app.controller('RTCController', function($rootScope, $scope){
                 for (var i = 0; i < slice.length; i++) {
                     byteNumbers[i] = slice.charCodeAt(i);
                 }
-
                 var byteArray = new Uint8Array(byteNumbers);
-
                 byteArrays.push(byteArray);
             }
-
             var blob = new Blob(byteArrays, {type: contentType});
-            //var blob = new Blob(byteArrays);
             return blob;
         }
-
-
     };
 });
