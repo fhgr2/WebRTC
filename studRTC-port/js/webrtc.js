@@ -268,10 +268,12 @@
         // -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
         // Send Message - Send Message to All Calls or a Specific Call
         // -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+        //add callback
         PHONE.send = function( message, number ) {
             if (number) return get_conversation(number).send(message);
             PUBNUB.each( conversations, function( number, talk ) {
                 talk.send(message);
+                //callback
             } );
         };
 

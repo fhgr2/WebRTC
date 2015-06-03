@@ -244,25 +244,32 @@ app.controller('RTCController', function($rootScope, $scope){
 				console.log("sending: "+globalType+" with "+globalData);
                 console.log(globalData.length);
                 var progressBar = document.getElementById("sendProgress");
-                console.log(progressBar.getAttribute("aria-valuenow"));
-                progressBar.setAttribute("aria-valuenow", "0");
-                if (globalData.length > 5000) {
+                //var chunkSize = 5000;
+                var chunkSize = 10000;
+                var progress = 0;
+                var origSize = globalData.length;
+                var chunkCount = Math.round(origSize / chunkSize);
+                console.log("chunks to send: "+chunkCount);
+                console.log(progressBar.style.width);
+                progressBar.style.width = "0%";
+                if (globalData.length > chunkSize) {
                     console.log("sending something big");
-                    while (globalData.length > 5000) {
+                    while (globalData.length > chunkSize) {
+                        progress = Math.round(100/chunkCount);
+                        progressBar.style.width = progress+"%";
                         //slice globalData
                         console.log('send...');
-                        var sendData = globalData.substr(0, 5000);
-                        //globalData = globalData.slice(0, 5000);
-                        globalData = globalData.slice(5000);
+                        var sendData = globalData.substr(0, chunkSize);
+                        globalData = globalData.slice(chunkSize);
                         console.log("still to send: "+globalData.length);
-                        phone.send({type: globalType, file: sendData});
+                        phone.send({type: globalType, file: sendData});//send callback
                     }
                     phone.send({type: globalType, file: globalData});
                     phone.send({type: "end"});
                     globalData = "";
                     console.log(globalData.length);
                     console.log("sent end");
-                    progressBar.setAttribute("aria-valuenow", "100");
+                    progressBar.style.width = "100%";
                 } else {
                     console.log("sending something small");
                     phone.send({type: globalType, file: globalData});
@@ -270,7 +277,7 @@ app.controller('RTCController', function($rootScope, $scope){
                     globalData = "";
                     console.log(globalData.length);
                     console.log("sent end");
-                    progressBar.setAttribute("aria-valuenow", "100");
+                    progressBar.style.width = "100%";
                 }
 
 
