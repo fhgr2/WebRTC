@@ -154,8 +154,8 @@
                     };
 
                     // Sending Messages
-                    talk.send = function(message) {
-                        transmit( number, { usermsg : message } );
+                    talk.send = function(message, callback) {
+                        transmit( number, { usermsg : message }, null, null, callback );
                     };
 
                     // Sending Stanpshots
@@ -269,11 +269,10 @@
         // Send Message - Send Message to All Calls or a Specific Call
         // -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
         //add callback
-        PHONE.send = function( message, number ) {
+        PHONE.send = function( message, number, callback ) {
             if (number) return get_conversation(number).send(message);
             PUBNUB.each( conversations, function( number, talk ) {
-                talk.send(message);
-                //callback
+                talk.send(message, callback);
             } );
         };
 
@@ -412,19 +411,19 @@
         // -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
         // Send SDP Call Offers/Answers and ICE Candidates to Peer
         // -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
-        function transmit( phone, packet, times, time ) {
+        function transmit( phone, packet, times, time, callback ) {
             if (!packet) return;
             var number  = config.number;
             var message = { packet : packet, id : sessionid, number : number };
             debugcb(message);
-            pubnub.publish({ channel : phone, message : message });
-
+            pubnub.publish({ channel : phone, message : message, callback : callback });
+            //do ihänke
             // Recurse if Requested for
             if (!times) return;
             time = time || 1;
             if (time++ >= times) return;
             setTimeout( function(){
-                transmit( phone, packet, times, time );
+                transmit( phone, packet, times, time, callback );
             }, 150 );
         }
 

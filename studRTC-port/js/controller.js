@@ -215,72 +215,59 @@ app.controller('RTCController', function($rootScope, $scope){
             };
 			var globalType;
 			var globalData;
-            //file sending stuff
+            var progressBar = document.getElementById("sendProgress");
+            // Prepare file for transfer
             var handleFileSelect = function (evt) {
                 var files = evt.target.files;
                 var file = files[0];
                 var type = file.type;
                 console.log(file.type);
+                progressBar.style.width = "0%";
                 if (files && file) {
                     var reader = new FileReader();
-
                     reader.onload = function (readerEvt) {
-
                         var binaryString = readerEvt.target.result;
-
 						globalType = type;
 						globalData = btoa(binaryString);
 						console.log("set global type to: "+globalType);
-						console.log("set global data to: "+globalData);
-                        //console.log("file: "+readerEvt.target.result);
-                        //console.log('sent: '+btoa(binaryString));
-                        //phone.send({type : type, file : btoa(binaryString) });
                     };
-
                     reader.readAsBinaryString(file);
                 }
             };
+            // transfer file
 			var handleSendFile = function(){
-				console.log("sending: "+globalType+" with "+globalData);
-                console.log(globalData.length);
-                var progressBar = document.getElementById("sendProgress");
-                //var chunkSize = 5000;
+				console.log("sending: "+globalType+" with "+globalData.length+" characters");
                 var chunkSize = 10000;
-                var progress = 0;
                 var origSize = globalData.length;
-                var chunkCount = Math.round(origSize / chunkSize);
+                var chunkCount = (origSize / chunkSize);
+                var progress = 0;
+                var increment = (100/chunkCount);
                 console.log("chunks to send: "+chunkCount);
-                console.log(progressBar.style.width);
-                progressBar.style.width = "0%";
                 if (globalData.length > chunkSize) {
                     console.log("sending something big");
                     while (globalData.length > chunkSize) {
-                        progress = Math.round(100/chunkCount);
-                        progressBar.style.width = progress+"%";
-                        //slice globalData
-                        console.log('send...');
                         var sendData = globalData.substr(0, chunkSize);
                         globalData = globalData.slice(chunkSize);
-                        console.log("still to send: "+globalData.length);
-                        phone.send({type: globalType, file: sendData});//send callback
+                        phone.send({type: globalType, file: sendData}, null, function(){
+                            progress += increment;
+                            progressBar.style.width = progress+"%";
+                            if (progress > 99) {
+                                progressBar.setAttribute("class", "progress-bar progress-bar-striped");
+                                progressBar.style.width = "100%";
+                            }
+                        });
                     }
                     phone.send({type: globalType, file: globalData});
                     phone.send({type: "end"});
                     globalData = "";
-                    console.log(globalData.length);
-                    console.log("sent end");
-                    progressBar.style.width = "100%";
                 } else {
                     console.log("sending something small");
                     phone.send({type: globalType, file: globalData});
                     phone.send({type: "end"});
                     globalData = "";
-                    console.log(globalData.length);
-                    console.log("sent end");
                     progressBar.style.width = "100%";
+                    progressBar.setAttribute("class", "progress-bar progress-bar-striped");
                 }
-
-
 			};
 
             if (window.File && window.FileReader && window.FileList && window.Blob) {
